@@ -1,0 +1,32 @@
+version: "0.1"
+name: migration-test
+services:
+  postgresql:
+    container_name: postgres_16
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgress_migration
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/postgres:/var/lib/postgresql
+    restart: always
+    networks:
+      pgadmin_postgres_network:
+
+  pgadmin:
+    container_name: pgadmin4_8
+    image: dpage/pgadmin4:8
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=jgcavazos96@hotmail.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - "5050:80"
+    restart: always
+    networks:
+      pgadmin_postgres_network:
+
+networks:
+  pgadmin_postgres_network:
